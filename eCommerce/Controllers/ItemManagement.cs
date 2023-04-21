@@ -72,7 +72,7 @@ namespace eCommerce.Controllers
                     Color = viewModel.Color,
                     Spec = viewModel.Spec,
                 };
-                _itemService.Create(item);
+                await _itemService.Create(item);
             }
             return RedirectToAction("Index");
         }
