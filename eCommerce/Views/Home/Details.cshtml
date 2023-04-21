@@ -1,0 +1,81 @@
+﻿@model DetailsViewModel
+
+<ul>
+    <li>Name: @Model.Item.Name</li>
+    <li>Category: @Model.Item.CategoryId</li>
+    @if (Model.Item.Description != null)
+    {
+        <li>Description: @Model.Item.Description</li>
+    }
+    <li>Price: @Model.Item.Price</li>
+    <li>Seller: @Model.Item.Seller</li>
+    @if (Model.Item.ImageLink != null)
+    {
+        <li>Image: <img src="@Model.Item.ImageLink" height="250" /></li>
+    }
+    @if (Model.Item.Size != null)
+    {
+        <li>@Model.Item.Size</li>
+    }
+    @if (Model.Item.Color != null)
+    {
+        <li>@Model.Item.Color</li>
+    }
+    @if (Model.Item.Spec != null)
+    {
+        <li>@Model.Item.Spec</li>
+    }
+    @if (Model.Item.AvgRating == null)
+    {
+        <li>Average rating: Not rated yet</li>
+    }
+    else
+    {
+        <li>Average rating: @Model.Item.AvgRating</li>
+    }
+    @if (Model.UserRating != null)
+    {
+        <li>Your rating: @Model.UserRating</li>
+    }
+</ul>
+<div class="form-group">
+    <form asp-action="Rate" asp-controller="Home" method="get">
+        <b>Review item:</b>
+        <select asp-for="Rate">
+            @for (int i = 1; i <= 5; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </select>
+        <input asp-for="ItemId" type="hidden" value="@Model.Item.Id"/>
+        <button class="btn btn-primary">Rate item</button>
+    </form>
+</div>
+
+<div>
+    @if (Model.ReviewUsernames != null)
+    {
+        <h2>Reviews</h2>
+        <table>
+            <tr>
+                <td>Username</td>
+                <td>Review</td>
+            </tr>
+            @for (int i = 0; i < Model.ReviewUsernames.Count; i++)
+            {
+                <tr>
+                    <td>@Model.ReviewUsernames[i]</td>
+                    <td>@Model.Item.ItemReviews[i].ReviewText</td>
+                </tr>
+            }
+        </table>
+    }
+</div>
+
+<div>
+    <form method="post" asp-action="Review">
+        <textarea asp-for="ReviewText"></textarea>
+        <input asp-for="ItemId" type="hidden" value="@Model.Item.Id" />
+        <button type="submit">Submit Review</button>
+    </form>
+</div>

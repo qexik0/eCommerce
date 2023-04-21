@@ -1,0 +1,65 @@
+﻿@using System.Security.Claims;
+@model BrowseViewModel
+<h2>Available items</h2>
+<b>Filter:</b>
+<form asp-action="Index" method="get">
+    <select name="CategoryId">
+        <option value="">---</option>
+        @foreach (var category in Model.Categories)
+        {
+            <option value="@category.Id">@category.Name</option>
+        }
+    </select>
+    <button class="btn" type="submit" asp-action="Index">Filter</button>
+</form>
+@{
+    var isAdmin = false;
+    if (User.Identity != null)
+    {
+        var isAuthenticated = User.Identity.IsAuthenticated;
+        var username = User.Identity.Name;
+        if (isAuthenticated)
+        {
+            foreach (var claim in User.Claims)
+            {
+                if (claim.Type == ClaimTypes.Role && claim.Value == "admin")
+                {
+                    isAdmin = true;
+                    break;
+                }
+            }
+        }
+    }
+    
+}
+<table>
+    <tr>
+        <td>Item name</td>
+        <td>Item price</td>
+        <td>Item page</td>
+        @if (isAdmin)
+        {
+            <td>Edit button</td>
+        }
+        @if (isAdmin)
+        {
+            <td>Delete button</td>
+        }
+    </tr>
+    @foreach (var item in Model.Items)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Price</td>
+            <td><a asp-action="Details" asp-controller="Home" asp-route-itemId="@item.Id">Details</a></td>
+            @if (isAdmin)
+            {
+                <td><a href="@Url.Action("EditItem", "ItemManagement", new { itemId = item.Id })">Edit</a></td>
+            }
+            @if (isAdmin)
+            {
+                <td><a href="@Url.Action("DeleteItem", "Home", new { itemId = item.Id })">Delete</a></td>   
+            }
+        </tr>
+    }
+</table>

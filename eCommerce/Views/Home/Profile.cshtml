@@ -1,0 +1,29 @@
+﻿@model ProfileViewModel
+
+<h2>Profile info</h2>
+<ul>
+    <li>Username: @Model.user.Username</li>
+    <li>Password: @Model.user.Password</li>
+    <li>IsAdmin: <input type="checkbox" disabled checked="@Model.user.IsAdmin" /></li>
+    @if (Model.AvgRating != null)
+    {
+        <li>Average rating: @Model.AvgRating</li>   
+    }
+</ul>
+
+@if (Model.user.UserReviews != null && Model.user.UserReviews.Count > 0)
+{
+    <table>
+        <tr>
+            <td>Item link</td>
+            <td>Review text</td>
+        </tr>
+        @foreach (var review in Model.user.UserReviews)
+        {
+            <tr>
+                <td><a href="@Url.Action("Details", "Home", new { itemId = review.ItemId })">Item</a></td>
+                <td>@review.ReviewText</td>
+            </tr>
+        }
+    </table>
+}

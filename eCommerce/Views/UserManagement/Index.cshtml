@@ -1,0 +1,39 @@
+﻿@model UserManagementViewModel
+
+<h2>Adding account section</h2>
+<div>
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="Username"></label>
+            <input asp-for="Username" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" />
+        </div>
+        <div class="form-group">
+            <label asp-for="IsAdmin"></label>
+            <input asp-for="IsAdmin" type="checkbox"/>
+        </div>
+        <button type="submit" class="btn btn-primary" asp-action="CreateAccount">Create</button>
+    </form>
+</div>
+<br />
+<h2>Deleting users section</h2>
+<table>
+    <tr>
+        <td>Username</td>
+        <td>Password</td>
+        <td>IsAdmin</td>
+        <td>Delete?</td>
+    </tr>
+    @foreach (var user in Model.Users)
+    {
+        <tr>
+            <td>@user.Username</td>
+            <td>@user.Password</td>
+            <td><input type="checkbox" checked=@user.IsAdmin disabled /></td>
+            <td><a href="@Url.Action("DeleteAccount", "UserManagement", new {username = user.Username})">Delete</a></td>
+        </tr>
+    }
+</table>

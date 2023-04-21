@@ -1,0 +1,73 @@
+﻿@model ItemManagementViewModel
+
+<h2>Existing categories</h2>
+<h3 class="text-danger">@TempData["CategoryDeletionError"]</h3>
+<table>
+    <tr>
+        <td><b>Category Name</b></td>
+    </tr>
+    @foreach (var category in Model.Categories)
+    {
+        <tr>
+            <td>@category.Name</td>
+            <td><a href="@Url.Action("DeleteCategory", "ItemManagement", new {name = category.Name})">Delete</a></td>
+        </tr>
+    }
+</table>
+
+<h2>Create Category</h2>
+<div>
+    <form method="post">
+        <input asp-for="CategoryName"/>
+        <button type="submit" class="btn btn-primary" asp-action="CreateCategory">Create</button>
+    </form>
+</div>
+
+<h2>Create item</h2>
+<div>
+    <form method="post">
+        <h3><span class="text-danger">@TempData["ItemCreationError"]</span></h3>
+        <div class="form-group">
+            <label asp-for="ItemName"></label>
+            <input asp-for="ItemName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="ItemCategory"></label>
+            <select asp-for="ItemCategory" class="form-control">
+                @foreach (var category in Model.Categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label asp-for="Price"></label>
+            <input asp-for="Price" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Seller"></label>
+            <input asp-for="Seller" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="ImageLink"></label>
+            <input asp-for="ImageLink" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Size"></label>
+            <input asp-for="Size" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Color"></label>
+            <input asp-for="Color" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Spec"></label>
+            <input asp-for="Spec" class="form-control" />
+        </div>
+        <button type="submit" asp-action="CreateItem" asp-controller="ItemManagement">Create</button>
+    </form>
+</div>
