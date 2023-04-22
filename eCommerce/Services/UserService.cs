@@ -43,7 +43,7 @@ namespace eCommerce.Services
             await _users.FindOneAndDeleteAsync(user => user.Username == username);
         }
 
-        public async void UpdateRatings(User user)
+        public async Task UpdateRatings(User user)
         {
             var filter = Builders<User>.Filter.Eq(x => x.Id, user.Id);
             var update = Builders<User>.Update.Set(x => x.UserRatings, user.UserRatings);

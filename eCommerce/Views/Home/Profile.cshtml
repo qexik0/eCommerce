@@ -7,7 +7,7 @@
     <li>IsAdmin: <input type="checkbox" disabled checked="@Model.user.IsAdmin" /></li>
     @if (Model.AvgRating != null)
     {
-        <li>Average rating: @Model.AvgRating</li>   
+        <li>Average rating: @Math.Round((double) Model.AvgRating, 2)</li>   
     }
 </ul>
 

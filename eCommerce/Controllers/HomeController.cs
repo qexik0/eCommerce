@@ -92,8 +92,8 @@ namespace eCommerce.Controllers
             {
                 item.ItemRatings.Find(x => x.UserId == userId).Rating = (int)viewModel.Rate;
                 user.UserRatings.Find(x => x.ItemId == item.Id).Rating = (int)viewModel.Rate;
-                _itemService.UpdateRatings(item);
-                _userService.UpdateRatings(user);
+                await _itemService.UpdateRatings(item);
+                await _userService.UpdateRatings(user);
             }
             else
             {
@@ -102,14 +102,14 @@ namespace eCommerce.Controllers
                     item.ItemRatings = new();
                 }
                 item.ItemRatings.Add(new ItemRating { UserId = userId, Rating = (int)viewModel.Rate });
-                _itemService.UpdateRatings(item);
+                await _itemService.UpdateRatings(item);
 
                 if (user.UserRatings == null)
                 {
                     user.UserRatings = new();
                 }
                 user.UserRatings.Add(new UserRating { ItemId = viewModel.ItemId, Rating = (int)viewModel.Rate });
-                _userService.UpdateRatings(user);
+                await _userService.UpdateRatings(user);
             }
             return RedirectToAction("Details", new { itemId = item.Id });
         }

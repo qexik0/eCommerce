@@ -59,7 +59,7 @@ namespace eCommerce.Services
             return q.First().Name;
         }
 
-        public async void UpdateRatings(Item item)
+        public async Task UpdateRatings(Item item)
         {
             var filter = Builders<Item>.Filter.Eq(x => x.Id, item.Id);
             var update = Builders<Item>.Update.Set(x => x.ItemRatings, item.ItemRatings);

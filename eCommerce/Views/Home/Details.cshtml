@@ -31,11 +31,11 @@
     }
     else
     {
-        <li>Average rating: @Model.Item.AvgRating</li>
+        <li>Average rating: @Math.Round((double) @Model.Item.AvgRating, 2)</li>
     }
     @if (Model.UserRating != null)
     {
-        <li>Your rating: @Model.UserRating</li>
+        <li>Your rating: Model.UserRating</li>
     }
 </ul>
 <div class="form-group">
